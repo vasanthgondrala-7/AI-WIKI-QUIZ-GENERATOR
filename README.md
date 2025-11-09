@@ -282,4 +282,32 @@ Test with the URLs provided in `sample_data/example_urls.md`:
 - **Routing:** React Router v6
 
 ## 🚢 Deployment
-**Netlify:**
+
+### Deploy to Netlify
+
+1. **Push your code to GitHub:**
+   ```bash
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin main
+   ```
+
+2. **Connect to Netlify:**
+   - Go to [Netlify](https://app.netlify.com/)
+   - Click "Add new site" → "Import an existing project"
+   - Connect your GitHub repository
+   - Netlify will auto-detect settings from `netlify.toml`
+
+3. **Configure Environment Variables:**
+   In Netlify dashboard → Site settings → Environment variables, add:
+   ```
+   VITE_SUPABASE_URL=your-supabase-url
+   VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
+   VITE_SUPABASE_PROJECT_ID=your-project-id
+   ```
+
+4. **Deploy:**
+   - Click "Deploy site"
+   - Your app will be live at `your-site-name.netlify.app`
+
+**Note:** Edge functions are Supabase-specific and run on Supabase infrastructure, not Netlify. The frontend will communicate with your Supabase project's edge functions.
