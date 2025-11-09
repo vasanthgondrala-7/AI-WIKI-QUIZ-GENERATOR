@@ -109,52 +109,12 @@ serve(async (req) => {
       throw new Error('Failed to parse quiz data from AI response');
     }
 
-    // Get user ID from auth header
-    const authHeader = req.headers.get("authorization");
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseKey, {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false,
-      },
-      global: {
-        headers: {
-          Authorization: authHeader!,
-        },
-      },
-    });
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      throw new Error("User not authenticated");
-    }
-
-    // Store quiz in database
-    const { data: quiz, error: insertError } = await supabase
-      .from("quizzes")
-      .insert({
-        url: wikipediaUrl,
-        title: quizData.title || title,
-        summary: quizData.summary,
-        quiz_data: quizData,
-        user_id: user.id,
-      })
-      .select()
-      .single();
-
-    if (insertError) {
-      console.error('Database insert error:', insertError);
-      throw insertError;
-    }
-
-    console.log('Quiz saved to database:', quiz.id);
-
+    // Return quiz data directly without authentication or database
     return new Response(
-      JSON.stringify({ quiz, quizData }),
+      JSON.stringify({ 
+        quiz: { id: crypto.randomUUID() },
+        quizData 
+      }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {

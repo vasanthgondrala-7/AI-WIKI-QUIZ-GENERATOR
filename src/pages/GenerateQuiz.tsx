@@ -1,19 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Sparkles, Link2, BookOpen, Lightbulb, Loader2, LogOut } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Sparkles, Link2, BookOpen, Lightbulb, Loader2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Auth } from "@/components/Auth";
 import { QuizDisplay } from "@/components/QuizDisplay";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const GenerateQuiz = () => {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
   const [url, setUrl] = useState("");
   const [quizData, setQuizData] = useState<any>(null);
@@ -38,28 +34,6 @@ const GenerateQuiz = () => {
     },
   ];
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    toast({
-      title: "Signed out",
-      description: "You've been successfully signed out.",
-    });
-  };
 
   const handleGenerateQuiz = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,13 +65,28 @@ const GenerateQuiz = () => {
     }
   };
 
-  const handleQuizComplete = async (results: any) => {
+  const handleQuizComplete = (results: any) => {
     try {
-      const { error } = await supabase
-        .from("quiz_results")
-        .insert(results);
-
-      if (error) throw error;
+      // Get existing quiz history from localStorage
+      const existingHistory = localStorage.getItem("quizHistory");
+      const history = existingHistory ? JSON.parse(existingHistory) : [];
+      
+      // Add new result with quiz metadata
+      const newResult = {
+        ...results,
+        quizTitle: quizData.title,
+        quizUrl: url,
+        completedAt: new Date().toISOString(),
+      };
+      
+      history.unshift(newResult);
+      
+      // Keep only last 50 results
+      if (history.length > 50) {
+        history.pop();
+      }
+      
+      localStorage.setItem("quizHistory", JSON.stringify(history));
 
       toast({
         title: "Results Saved!",
@@ -113,18 +102,6 @@ const GenerateQuiz = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return <Auth />;
-  }
-
   if (quizData) {
     return (
       <div className="flex min-h-screen flex-col">
@@ -132,13 +109,9 @@ const GenerateQuiz = () => {
         <main className="flex-1 py-12 md:py-16">
           <div className="container px-4">
             <div className="mx-auto max-w-4xl">
-              <div className="mb-6 flex items-center justify-between">
+              <div className="mb-6">
                 <Button variant="outline" onClick={() => { setQuizData(null); setQuizId(null); }}>
                   Generate Another Quiz
-                </Button>
-                <Button variant="ghost" onClick={handleSignOut} className="gap-2">
-                  <LogOut className="h-4 w-4" />
-                  Sign Out
                 </Button>
               </div>
               <QuizDisplay
@@ -161,13 +134,6 @@ const GenerateQuiz = () => {
       <main className="flex-1 py-12 md:py-16">
         <div className="container px-4">
           <div className="mx-auto max-w-4xl">
-            <div className="mb-6 flex justify-end">
-              <Button variant="ghost" onClick={handleSignOut} className="gap-2">
-                <LogOut className="h-4 w-4" />
-                Sign Out
-              </Button>
-            </div>
-
             {/* Header */}
             <div className="mb-8 text-center">
               <div className="mb-4 inline-flex items-center justify-center rounded-2xl bg-gradient-primary p-4 shadow-glow">

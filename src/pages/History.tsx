@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Clock, Loader2, LogOut, ExternalLink } from "lucide-react";
+import { Clock, ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,83 +13,24 @@ import {
 } from "@/components/ui/table";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Auth } from "@/components/Auth";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
 
 const History = () => {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
   const [quizResults, setQuizResults] = useState<any[]>([]);
-  const { toast } = useToast();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        loadQuizHistory();
-      }
-      setLoading(false);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        loadQuizHistory();
-      }
-    });
-
-    return () => subscription.unsubscribe();
+    loadQuizHistory();
   }, []);
 
-  const loadQuizHistory = async () => {
+  const loadQuizHistory = () => {
     try {
-      const { data, error } = await supabase
-        .from("quiz_results")
-        .select(`
-          *,
-          quizzes (
-            id,
-            title,
-            url,
-            created_at
-          )
-        `)
-        .order("completed_at", { ascending: false });
-
-      if (error) throw error;
-      setQuizResults(data || []);
+      const existingHistory = localStorage.getItem("quizHistory");
+      const history = existingHistory ? JSON.parse(existingHistory) : [];
+      setQuizResults(history);
     } catch (error: any) {
       console.error("Error loading quiz history:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load quiz history",
-        variant: "destructive",
-      });
+      setQuizResults([]);
     }
   };
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    toast({
-      title: "Signed out",
-      description: "You've been successfully signed out.",
-    });
-  };
-
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return <Auth />;
-  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -98,15 +39,9 @@ const History = () => {
       <main className="flex-1 py-12 md:py-16">
         <div className="container px-4">
           <div className="mx-auto max-w-6xl">
-            <div className="mb-8 flex items-center justify-between">
-              <div>
-                <h1 className="mb-2 text-3xl font-bold md:text-4xl">Quiz History</h1>
-                <p className="text-muted-foreground">Your past completed quizzes</p>
-              </div>
-              <Button variant="ghost" onClick={handleSignOut} className="gap-2">
-                <LogOut className="h-4 w-4" />
-                Sign Out
-              </Button>
+            <div className="mb-8">
+              <h1 className="mb-2 text-3xl font-bold md:text-4xl">Quiz History</h1>
+              <p className="text-muted-foreground">Your past completed quizzes</p>
             </div>
 
             {quizResults.length === 0 ? (
@@ -147,10 +82,10 @@ const History = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {quizResults.map((result) => (
-                        <TableRow key={result.id}>
+                      {quizResults.map((result, index) => (
+                        <TableRow key={index}>
                           <TableCell className="font-medium">
-                            {result.quizzes?.title || "Unknown Quiz"}
+                            {result.quizTitle || "Unknown Quiz"}
                           </TableCell>
                           <TableCell className="text-center">
                             <Badge variant="secondary">
@@ -174,17 +109,17 @@ const History = () => {
                             {Math.floor(result.time_taken / 60)}:{(result.time_taken % 60).toString().padStart(2, '0')}
                           </TableCell>
                           <TableCell className="text-muted-foreground">
-                            {new Date(result.completed_at).toLocaleDateString()}
+                            {new Date(result.completedAt).toLocaleDateString()}
                           </TableCell>
                           <TableCell className="text-right">
-                            {result.quizzes?.url && (
+                            {result.quizUrl && (
                               <Button
                                 variant="ghost"
                                 size="sm"
                                 asChild
                               >
                                 <a 
-                                  href={result.quizzes.url} 
+                                  href={result.quizUrl} 
                                   target="_blank" 
                                   rel="noopener noreferrer"
                                   className="gap-2"
