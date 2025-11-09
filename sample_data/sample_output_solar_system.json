@@ -1,0 +1,69 @@
+{
+  "quizId": "660e8400-e29b-41d4-a716-446655440001",
+  "quiz": {
+    "title": "Solar System",
+    "summary": "The Solar System is the gravitationally bound system of the Sun and the objects that orbit it. It formed 4.6 billion years ago from the gravitational collapse of a giant interstellar molecular cloud. The Solar System contains eight planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune. It also includes dwarf planets, moons, asteroids, comets, and other small bodies.",
+    "questions": [
+      {
+        "question": "How many planets are in our Solar System?",
+        "options": [
+          "7",
+          "8",
+          "9",
+          "10"
+        ],
+        "answer": 1,
+        "difficulty": "easy",
+        "explanation": "There are eight planets in our Solar System: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune. Pluto was reclassified as a dwarf planet in 2006."
+      },
+      {
+        "question": "Which planet is known as the 'Red Planet'?",
+        "options": [
+          "Venus",
+          "Jupiter",
+          "Mars",
+          "Mercury"
+        ],
+        "answer": 2,
+        "difficulty": "easy",
+        "explanation": "Mars is known as the 'Red Planet' because of its reddish appearance, which is caused by iron oxide (rust) on its surface."
+      },
+      {
+        "question": "What is the largest planet in our Solar System?",
+        "options": [
+          "Saturn",
+          "Neptune",
+          "Jupiter",
+          "Earth"
+        ],
+        "answer": 2,
+        "difficulty": "easy",
+        "explanation": "Jupiter is the largest planet in our Solar System, with a mass more than twice that of all the other planets combined. It's a gas giant with a diameter of about 143,000 kilometers."
+      },
+      {
+        "question": "Approximately how old is the Solar System?",
+        "options": [
+          "1 billion years",
+          "2.5 billion years",
+          "4.6 billion years",
+          "10 billion years"
+        ],
+        "answer": 2,
+        "difficulty": "medium",
+        "explanation": "The Solar System formed approximately 4.6 billion years ago from the gravitational collapse of a giant interstellar molecular cloud. This age has been determined through radiometric dating of meteorites and Moon rocks."
+      },
+      {
+        "question": "What separates the inner planets from the outer planets?",
+        "options": [
+          "The Moon",
+          "The asteroid belt",
+          "The Kuiper belt",
+          "The Oort cloud"
+        ],
+        "answer": 1,
+        "difficulty": "medium",
+        "explanation": "The asteroid belt, located between the orbits of Mars and Jupiter, separates the inner rocky planets (Mercury, Venus, Earth, Mars) from the outer gas giants (Jupiter, Saturn, Uranus, Neptune)."
+      }
+    ]
+  }
+}

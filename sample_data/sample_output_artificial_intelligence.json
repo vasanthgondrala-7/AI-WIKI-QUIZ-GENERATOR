@@ -1,0 +1,81 @@
+{
+  "quizId": "550e8400-e29b-41d4-a716-446655440000",
+  "quiz": {
+    "title": "Artificial Intelligence",
+    "summary": "Artificial intelligence (AI) is the intelligence of machines or software, as opposed to the intelligence of humans or animals. It is a field of study in computer science that develops and studies intelligent machines. AI technology is widely used throughout industry, government, and science. Some high-profile applications include advanced web search engines, recommendation systems, understanding human speech, self-driving cars, generative or creative tools, and competing at the highest level in strategic game systems.",
+    "questions": [
+      {
+        "question": "What is the primary goal of artificial intelligence research?",
+        "options": [
+          "To create machines that can think and learn like humans",
+          "To replace all human workers with robots",
+          "To develop faster computer processors",
+          "To improve internet connectivity"
+        ],
+        "answer": 0,
+        "difficulty": "easy",
+        "explanation": "The primary goal of AI research is to develop machines and software that can perform tasks that typically require human intelligence, such as visual perception, speech recognition, decision-making, and language translation."
+      },
+      {
+        "question": "Which of the following is NOT a common application of AI technology?",
+        "options": [
+          "Web search engines",
+          "Self-driving cars",
+          "Manual data entry",
+          "Recommendation systems"
+        ],
+        "answer": 2,
+        "difficulty": "easy",
+        "explanation": "Manual data entry is a repetitive task that doesn't typically leverage AI technology. AI is commonly used in search engines, autonomous vehicles, and recommendation systems to process and analyze large amounts of data intelligently."
+      },
+      {
+        "question": "What is machine learning in the context of artificial intelligence?",
+        "options": [
+          "Teaching robots to physically move",
+          "A subset of AI where systems learn from data without explicit programming",
+          "The process of manufacturing AI hardware",
+          "Installing software on computers"
+        ],
+        "answer": 1,
+        "difficulty": "medium",
+        "explanation": "Machine learning is a subset of AI that focuses on developing algorithms and statistical models that enable computer systems to improve their performance on a task through experience, without being explicitly programmed for every scenario."
+      },
+      {
+        "question": "Which historical event is considered a milestone in AI development?",
+        "options": [
+          "The invention of the first computer",
+          "Alan Turing's proposal of the Turing Test in 1950",
+          "The creation of the internet",
+          "The launch of the first smartphone"
+        ],
+        "answer": 1,
+        "difficulty": "medium",
+        "explanation": "Alan Turing's proposal of the Turing Test in 1950 was a significant milestone in AI. The test evaluates a machine's ability to exhibit intelligent behavior indistinguishable from that of a human, setting a foundation for AI research."
+      },
+      {
+        "question": "What is 'deep learning' and how does it differ from traditional machine learning?",
+        "options": [
+          "Learning at greater ocean depths",
+          "A machine learning technique using neural networks with multiple layers to learn hierarchical representations",
+          "A method of teaching AI by showing it more examples",
+          "A faster version of regular machine learning"
+        ],
+        "answer": 1,
+        "difficulty": "hard",
+        "explanation": "Deep learning is a specialized subset of machine learning that uses artificial neural networks with multiple layers (deep neural networks) to progressively extract higher-level features from raw input. Unlike traditional machine learning which often requires manual feature engineering, deep learning can automatically learn representations from data."
+      },
+      {
+        "question": "What ethical concerns are commonly associated with AI development?",
+        "options": [
+          "AI systems consuming too much electricity",
+          "Bias in AI algorithms, job displacement, and privacy concerns",
+          "AI systems being too expensive",
+          "Computers getting too hot"
+        ],
+        "answer": 1,
+        "difficulty": "hard",
+        "explanation": "Major ethical concerns in AI include algorithmic bias (where AI systems may discriminate based on training data), potential job displacement as automation increases, privacy issues related to data collection and surveillance, and questions about accountability and transparency in AI decision-making."
+      }
+    ]
+  }
+}
