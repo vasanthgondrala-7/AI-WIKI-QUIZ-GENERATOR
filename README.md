@@ -277,7 +277,7 @@ Test with the URLs provided in `sample_data/example_urls.md`:
 - **Frontend:** React 18, TypeScript, Vite
 - **Styling:** Tailwind CSS, shadcn/ui components
 - **Backend:** Supabase Edge Functions (Deno)
-- **AI:** Lovable AI Gateway (Google Gemini 2.5 Flash)
+- **AI:** Google Gemini 2.5 Flash
 - **Storage:** Browser LocalStorage
 - **Routing:** React Router v6
 
